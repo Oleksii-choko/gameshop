@@ -25,12 +25,33 @@ class Platform(models.Model):
         verbose_name = 'Підтримка операційної системи'
         verbose_name_plural = 'Підтримки операційних систем'
         db_table = 'games_platform'
+class Genre(models.Model):
+    title = models.CharField(max_length=255, verbose_name='Жанр', unique=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Жанр'
+        verbose_name_plural = 'Жанри'
+        db_table = 'games_genres'
+
+class Tag(models.Model):
+    title = models.CharField(max_length=255, verbose_name='Тег', unique=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+        db_table = 'games_tags'
 
 
 class Category(models.Model):
     title = models.CharField(max_length=255, verbose_name='Назва категорії')
     image = models.ImageField(upload_to='categories/', null=True, blank=True, verbose_name='Зображення')
-    slug = models.SlugField(unique=True, null=True)
+    slug = models.SlugField(unique=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -52,20 +73,20 @@ class Game(models.Model):
         validators=[MinValueValidator(0), MaxValueValidator(100)],
         verbose_name='Знижка'
     )
-    stock = models.IntegerField(default=100, verbose_name='Кількість')
-    genres = models.CharField(max_length=255, verbose_name='Жанри')
-    tags = models.CharField(max_length=255, verbose_name='Теги')
+    stock = models.PositiveIntegerField(default=100, verbose_name='Кількість')
+    genres = models.ManyToManyField(Genre, blank=True, related_name='games', verbose_name='Жанр')
+    tags = models.ManyToManyField(Tag, blank=True, related_name='games', verbose_name='Тег')
     platforms = models.ManyToManyField(Platform, blank=True, related_name='games', verbose_name='Платформа')
-    languages_supported = models.ManyToManyField(Language, blank=True, related_name='languages', verbose_name='Мова')
+    languages_supported = models.ManyToManyField(Language, blank=True, related_name='games', verbose_name='Мова')
     publisher = models.CharField(max_length=255, verbose_name='Видавництво')
     image = models.ImageField(upload_to='product/', null=True, blank=True, verbose_name='Зображення')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата створення')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата оновлення')
-    watched = models.IntegerField(default=0, verbose_name='Перегляди')
+    watched = models.PositiveIntegerField(default=0, verbose_name='Перегляди')
     description = models.TextField(default='Тут скоро зʼявиться ваш опис...', verbose_name='Опис гри')
     info = models.TextField(default='Додаткова інформація про продукт', verbose_name='Інформація про гру')
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Категорія')
-    slug = models.SlugField(unique=True, null=True)
+    slug = models.SlugField(unique=True, blank=True)
     is_published = models.BooleanField(default=False, verbose_name='Опублікований')
 
     def __str__(self):
