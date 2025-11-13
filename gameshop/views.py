@@ -11,7 +11,7 @@ class Index(ListView):
     """Головна сторінка"""
     model = Game
     # context_object_name = 'categories'
-    extra_context = {'title': 'Главная страница'}
+    extra_context = {'title': 'Головна сторінка'}
     template_name = 'gameshop/index.html'
 
     # def get_queryset(self):

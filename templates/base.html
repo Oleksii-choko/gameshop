@@ -1,33 +1,40 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
 
+    <link rel="icon" href="{% static 'gameshop/assets/images/logo.png' %}" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'ico/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'ico/favicon-16x16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'ico/apple-touch-icon.png' %}">
+    <meta name="theme-color" content="#0f172a">
     <title>{% block title %}
         {% endblock title %}</title>
 
     {% include 'components/style.html' %}
-<!--
+    <!--
 
-TemplateMo 589 lugx gaming
+    TemplateMo 589 lugx gaming
 
-https://templatemo.com/tm-589-lugx-gaming
+    https://templatemo.com/tm-589-lugx-gaming
 
--->
-  </head>
+    -->
+</head>
 
 <body>
 
-    {% include 'components/header.html' %}
-    {% block main %}
-    {% endblock main %}
+{% include 'components/header.html' %}
+{% block main %}
+{% endblock main %}
 
-    {% include 'components/footer.html' %}
+{% include 'components/footer.html' %}
 
-    {% include 'components/scripts.html' %}
-  </body>
+{% include 'components/scripts.html' %}
+</body>
 </html>
