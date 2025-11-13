@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{ title }}
+{% endblock title %}
+{% block main %}
+<main>
+    {% include 'components/banner.html' %}
+    {% include 'components/features.html' %}
+    {% include 'components/trend_games' %}
+    {% include 'components/most_player' %}
+    {% include 'components/categories' %}
+    {% include 'components/cta' %}
+</main>
+{% endblock main %}
