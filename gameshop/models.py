@@ -57,7 +57,8 @@ class Category(models.Model):
         return f'Категория: pk={self.pk}, title={self.title}'
 
     def get_absolute_url(self):
-        ...
+        """Посилання на категорію"""
+        return reverse('shop_page', kwargs={'slug': self.slug})
 
     def get_category_photo(self):  # щоб діставав фото категорій
         if self.image:
@@ -101,7 +102,8 @@ class Game(models.Model):
         return f'Гра: pk={self.pk}, title={self.title}, price={self.price}'
 
     def get_absolute_url(self):
-        ...
+        """Посилання на гру"""
+        return reverse('game_page', kwargs={'slug': self.slug})
 
     def get_game_photo(self):  # щоб діставав фото категорій
         if self.image:

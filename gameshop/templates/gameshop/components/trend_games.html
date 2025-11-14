@@ -15,21 +15,7 @@
           </div>
         </div>
           {% for game in discount_game %}
-        <div class="col-lg-3 col-md-6">
-          <div class="item">
-            <div class="thumb">
-              <a href="product-details.html"><img src="{{ game.get_game_photo}}" alt=""></a>
-              <span class="price"><em>${{ game.price }}</em>$20</span>
-            </div>
-            <div class="down-content">
-                {% for g in game.genres.all %}
-              <span class="category">{{ g }}</span>
-                {% endfor %}
-              <h4>{{game}}</h4>
-              <a href="product-details.html"><i class="fa fa-shopping-bag"></i></a>
-            </div>
-          </div>
-        </div>
+            {% include 'gameshop/components/_gamecart.html' %}
           {% endfor %}
 
       </div>
