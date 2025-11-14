@@ -56,6 +56,15 @@ class Category(models.Model):
     def __repr__(self):
         return f'Категория: pk={self.pk}, title={self.title}'
 
+    def get_absolute_url(self):
+        ...
+
+    def get_category_photo(self):  # щоб діставав фото категорій
+        if self.image:
+            return self.image.url
+        else:
+            return 'https://placehold.co/600x400/EEEEEE/222222?text=No+Image'
+
     class Meta:
         verbose_name = 'Категорія'
         verbose_name_plural = 'Категорії'
@@ -90,6 +99,15 @@ class Game(models.Model):
 
     def __repr__(self):
         return f'Гра: pk={self.pk}, title={self.title}, price={self.price}'
+
+    def get_absolute_url(self):
+        ...
+
+    def get_game_photo(self):  # щоб діставав фото категорій
+        if self.image:
+            return self.image.url
+        else:
+            return 'https://placehold.co/600x400/EEEEEE/222222?text=No+Image'
 
     class Meta:
         verbose_name = 'Відеогра'
