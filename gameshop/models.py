@@ -58,7 +58,7 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         """Посилання на категорію"""
-        return reverse('shop_page', kwargs={'slug': self.slug})
+        return reverse('shop_by_category', kwargs={'slug': self.slug})
 
     def get_category_photo(self):  # щоб діставав фото категорій
         if self.image:
