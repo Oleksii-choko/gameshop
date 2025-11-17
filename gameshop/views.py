@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth import login, logout
 from django.contrib import messages
 
-from .models import Category, Game, Genre,Platform
+from .models import Category, Game, Genre, Platform
 from .forms import GameFilterForm
 
 
@@ -79,7 +79,6 @@ class Shop(ListView):
                     qs = qs.filter(genres__in=gens)
         return qs.distinct().order_by("-created_at")
 
-    # views.py (уривок)
     def get_form(self):
         initial = {}
         if slug := self.kwargs.get("slug"):
@@ -95,7 +94,4 @@ class Shop(ListView):
         ctx['categories'] = Category.objects.only('id','title','slug')
         ctx['genres'] = Genre.objects.only('id','title')
         ctx['platforms'] = Platform.objects.only('id','title')
-        # ctx['cat_title'] = {c.slug: c.title for c in Category.objects.only('slug', 'title')}
-        # ctx['plat_title'] = {p.id: p.title for p in Platform.objects.only('id', 'title')}
-        # ctx['gen_title'] = {g.id: g.title for g in Genre.objects.only('id', 'title')}
         return ctx

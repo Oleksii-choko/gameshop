@@ -28,5 +28,10 @@ class GameFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # приклад для інпутів ціни
-        for name in ('price_min', 'price_max'):
-            self.fields[name].widget.attrs.update({'class': 'form-control', 'placeholder': '0'})
+        # Інпути ціни
+        for name in ("price_min", "price_max"):
+            self.fields[name].widget.attrs.update({
+                "class": "form-control",
+                "placeholder": "0",
+                "inputmode": "decimal",
+            })

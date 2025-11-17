@@ -8,10 +8,35 @@ def qs_replace(request, **kwargs):
     Повертає поточний querystring, замінюючи/додаючи передані ключі.
     Значення None видаляє ключ із рядка.
     """
-    query = request.GET.copy()
+    qd = request.GET.copy()
+
     for k, v in kwargs.items():
-        if v is None:
-            query.pop(k, None)
+        if v in (None, '', []):
+            qd.pop(k, None)
         else:
-            query[k] = v
-    return query.urlencode()
+            qd[k] = v
+
+    return qd.urlencode()
+#
+#     return qd.urlencode()
+#
+# @register.simple_tag()
+# def get_sorted():
+#     sorters = [
+#         {'title':'-----'},
+#         {'title':'Ціна',
+#          'sorters': [
+#              ('price', 'за зростанням'),
+#              ('-price', 'за зменшенням')
+#
+#          ]
+#         },
+#         {'title':'За популярністю',
+#          'sorters':[
+#              ('watched', 'за зростанням'),
+#              ('-watched', 'за зменшенням')
+#          ]
+#
+#         }
+#     ]
+#     return sorters
