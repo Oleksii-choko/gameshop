@@ -8,10 +8,10 @@
             <h5 class="card-title mb-2">{{game}}</h5>
             <div class="d-flex align-items-baseline gap-2">
                 {% if game.discount_percent > 0 %}
-                <span class="fw-bold">$2</span>
+                <span class="fw-bold">${{game.price_after_discount}}</span>
                 <span class="text-muted text-decoration-line-through small">${{game.price}}</span>
                 {% else %}
-                <span class="fw-bold">${{game.price}}</span>
+                <span class="fw-bold">${{game.price_after_discount}}</span>
                 {% endif%}
             </div>
             <a href="#" class="stretched-link" aria-label="Перейти до гри"></a>

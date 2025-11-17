@@ -1,61 +1,61 @@
-      <aside class="col-lg-3">
-        <form id="filters" action="#" method="get" class="shop-filters">
-          <!-- Категорії -->
-          <div class="mb-4 filter-group">
+<aside class="col-lg-3">
+    <form id="filters" action="" method="get" class="shop-filters">
+        <input type="hidden" name="page" value="1">
+        <!-- Категорії -->
+        <div class="mb-4 filter-group">
             <div class="fw-semibold mb-2">Категорії</div>
             <ul class="list-unstyled mb-0">
-                {% for category in categories %}
-              <li class="mb-1">
-                <label class="d-flex align-items-center gap-2 filter-check">
-                  <input type="checkbox" name="category" value="action">
-                  <span>{{category}}</span>
-                </label>
-              </li>
+                {% for category in form.category %}
+                <li class="mb-1">
+                    <label class="d-flex align-items-center gap-2 filter-check">
+                        {{category.tag}}<span>{{category.choice_label}}</span>
+                    </label>
+                </li>
                 {% endfor%}
 
             </ul>
-          </div>
+        </div>
 
-          <!-- Ціна -->
-          <div class="mb-4 filter-group">
+        <!-- Ціна -->
+        <div class="mb-4 filter-group">
             <div class="fw-semibold mb-2">Ціна</div>
             <div class="d-flex align-items-center gap-2">
-              <input type="number" min="0" class="form-control" name="price_min" placeholder="від">
-              <input type="number" min="0" class="form-control" name="price_max" placeholder="до">
+                {{ form.price_min }}
+                {{ form.price_max }}
             </div>
-          </div>
+        </div>
 
-          <!-- Жанри -->
-          <div class="mb-4 filter-group">
+        <!-- Жанри -->
+        <div class="mb-4 filter-group">
             <div class="fw-semibold mb-2">Жанри</div>
             <ul class="list-unstyled mb-0">
-                {% for genre in genres %}
-              <li class="mb-1">
-                <label class="d-flex align-items-center gap-2 filter-check">
-                  <input type="checkbox" name="genre" value="platformer">
-                  <span>{{genre}}</span>
-                </label>
-              </li>
+                {% for genre in form.genre %}
+                <li class="mb-1">
+                    <label class="d-flex align-items-center gap-2 filter-check">
+                        {{genre.tag}}
+                        <span>{{genre.choice_label}}</span>
+                    </label>
+                </li>
                 {% endfor %}
             </ul>
-          </div>
+        </div>
 
-          <!-- Платформи -->
-          <div class="mb-4 filter-group">
+        <!-- Платформи -->
+        <div class="mb-4 filter-group">
             <div class="fw-semibold mb-2">Платформи</div>
             <ul class="list-unstyled mb-0">
-                {% for platform in platforms %}
-              <li class="mb-1">
-                <label class="d-flex align-items-center gap-2 filter-check">
-                  <input type="checkbox" name="platform" value="windows">
-                  <span>{{platform}}</span>
-                </label>
-              </li>
+                {% for platform in rform.platform %}
+                <li class="mb-1">
+                    <label class="d-flex align-items-center gap-2 filter-check">
+                        {{platform.tag}}
+                        <span>{{platform.choice_label}}</span>
+                    </label>
+                </li>
                 {% endfor %}
             </ul>
-          </div>
+        </div>
 
-          <button class="btn btn-primary w-100" type="submit">Фільтрувати</button>
-          <a class="btn btn-outline-secondary w-100 mt-2" href="#">Скинути</a>
-        </form>
-      </aside>
+        <button class="btn btn-primary w-100" type="submit">Фільтрувати</button>
+        <a class="btn btn-outline-secondary w-100 mt-2" href="{% url 'shop_page' %}">Скинути</a>
+    </form>
+</aside>

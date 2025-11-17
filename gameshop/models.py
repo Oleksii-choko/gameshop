@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
@@ -110,6 +112,12 @@ class Game(models.Model):
             return self.image.url
         else:
             return 'https://placehold.co/600x400/EEEEEE/222222?text=No+Image'
+    @property
+    def price_after_discount(self):
+        if self.discount_percent:
+            return (self.price * (Decimal(100) - Decimal(self.discount_percent)) / Decimal(100)).quantize(
+                Decimal('0.01'))
+        return self.price
 
     class Meta:
         verbose_name = 'Відеогра'
