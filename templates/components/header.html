@@ -1,19 +1,19 @@
 {% load static %}
-  <!-- ***** Preloader Start ***** -->
-  <div id="js-preloader" class="js-preloader">
+<!-- ***** Preloader Start ***** -->
+<div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+        <span class="dot"></span>
+        <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
-  </div>
-  <!-- ***** Preloader End ***** -->
+</div>
+<!-- ***** Preloader End ***** -->
 
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -25,12 +25,18 @@
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                      <li><a href="{% url 'index'%}" class="active">ГОЛОВНА</a></li>
-                      <li><a href="{% url 'shop_page' %}">МАГАЗИН</a></li>
-                      <li><a href="shop.html">НОВИНИ</a></li>
-                      <li><a href="{% url 'contact_us' %}">КОНТАКТИ</a></li>
-                      <li><a href="#">Sign In</a></li>
-                  </ul>
+                        <li><a href="{% url 'index'%}"
+                               class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                            ГОЛОВНА</a></li>
+                        <li><a href="{% url 'shop_page' %}"
+                               class="{% if request.resolver_match.url_name == 'shop_page' %}active{% endif %}">
+                            МАГАЗИН</a></li>
+                        <li><a href="shop.html">НОВИНИ</a></li>
+                        <li><a href="{% url 'contact_us' %}"
+                               class="{% if request.resolver_match.url_name == 'contact_us' %}active{% endif %}">
+                            КОНТАКТИ</a></li>
+                        <li><a href="#">Sign In</a></li>
+                    </ul>
                     <a class='menu-trigger'>
                         <span>Меню</span>
                     </a>
@@ -39,5 +45,5 @@
             </div>
         </div>
     </div>
-  </header>
-  <!-- ***** Header Area End ***** -->
+</header>
+<!-- ***** Header Area End ***** -->

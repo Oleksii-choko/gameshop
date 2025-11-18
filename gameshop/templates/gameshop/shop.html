@@ -18,10 +18,12 @@
             <!-- ========== RIGHT: GRID ========== -->
             <main class="col-12 col-lg-9">
                 <!-- Toolbar над сіткою ігор -->
-                <div class="shop-toolbar d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+                <div class="shop-toolbar d-flex flex-column gap-2 mb-4">
                     {% include 'gameshop/components/_sort.html' %}
 
-                    {% include 'gameshop/components/_chips.html' %}
+                    <div class="mt-1">
+                        {% include 'gameshop/components/_chips.html' %}
+                    </div>
                 </div>
 
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">

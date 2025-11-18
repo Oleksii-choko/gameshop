@@ -4,8 +4,8 @@ from .models import Category, Platform, Genre, ContactMessage
 
 SORT_CHOICES = [
     ('', 'За замовчуванням'),
-    ('price_asc', 'Ціна: спочатку дешевші'),
-    ('price_desc', 'Ціна: спочатку дорожчі'),
+    ('price_asc', 'Спочатку дешевші'),
+    ('price_desc', 'Спочатку дорожчі'),
     ('popular', 'За популярністю'),
 ]
 

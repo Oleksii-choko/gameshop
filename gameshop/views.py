@@ -110,8 +110,8 @@ class Shop(ListView):
         # Якщо хочеш, можеш ще передати список варіантів сортування
         ctx['sort_options'] = [
             ('', 'За замовчуванням'),
-            ('price_asc', 'Ціна: спочатку дешевші'),
-            ('price_desc', 'Ціна: спочатку дорожчі'),
+            ('price_asc', 'Спочатку дешевші'),
+            ('price_desc', 'Спочатку дорожчі'),
             ('popular', 'За популярністю'),
         ]
         ctx['categories'] = Category.objects.only('id','title','slug')
