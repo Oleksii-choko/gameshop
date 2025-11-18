@@ -6,34 +6,30 @@
 
   <div class="sort-control">
     <ul class="list-unstyled templatemo-accordion mb-0">
-      {% for group in data %}
-        <li class="pb-3">
-          <a class="collapsed d-flex justify-content-between align-items-center h5 text-decoration-none"
-             data-bs-toggle="collapse"
-             href="#sort-{{ forloop.counter }}"
-             role="button"
-             aria-expanded="true"
-             aria-controls="sort-{{ forloop.counter }}">
-            Фільтрація: {{ group.title }}
-            <i class="fa fa-fw fa-chevron-circle-down ms-2"></i>
-          </a>
+      <li class="pb-3">
+        <a class="collapsed d-flex justify-content-between align-items-center h5 text-decoration-none"
+           data-bs-toggle="collapse"
+           href="#sort-1"
+           role="button"
+           aria-expanded="true"
+           aria-controls="sort-1">
+            Сортування
+          <i class="fa fa-fw fa-chevron-circle-down ms-2"></i>
+        </a>
 
-          <ul id="sort-{{ forloop.counter }}" class="collapse show list-unstyled ps-3 mb-0">
-            {% if group.sorters %}
-              {% for sorter in group.sorters %}
-                {% with key=sorter.0 label=sorter.1 %}
-                  <li class="{% if request.GET.sort == key %}active{% endif %}">
-                    <a class="text-decoration-none"
-                       href="?{% qs_replace request sort=key page=1 %}">
-                      {{ label }}
-                    </a>
-                  </li>
-                {% endwith %}
-              {% endfor %}
-            {% endif %}
-          </ul>
-        </li>
-      {% endfor %}
+        <ul id="sort-1" class="collapse show list-unstyled ps-3 mb-0">
+          {% for key, label in sort_options %}
+          {% with is_active=current_sort|default:'' %}
+            <li class="{% if is_active == key %}active{% endif %}">
+              <a class="text-decoration-none"
+                 href="?{% if base_query %}{{ base_query }}&{% endif %}{% if key %}sort={{ key }}{% endif %}">
+                {{ label }}
+              </a>
+            </li>
+          {% endwith %}
+        {% endfor %}
+        </ul>
+      </li>
     </ul>
   </div>
 </div>

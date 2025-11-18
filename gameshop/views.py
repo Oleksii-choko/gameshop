@@ -43,6 +43,12 @@ class Shop(ListView):
     template_name = 'gameshop/shop.html'
     paginate_by = 6
 
+    SORT_MAP = {
+        'price_asc': 'price',
+        'price_desc': '-price',
+        'popular': '-watched',
+    }
+
     def get_queryset(self):
         qs = (Game.objects.filter(is_published=True)
               .select_related("category")
@@ -77,7 +83,12 @@ class Shop(ListView):
                         qs = qs.filter(genres=g)
                 else:
                     qs = qs.filter(genres__in=gens)
-        return qs.distinct().order_by("-created_at")
+            sort_key = form.cleaned_data.get('sort') or self.request.GET.get('sort')
+            if sort_key in self.SORT_MAP:
+                qs = qs.order_by(self.SORT_MAP[sort_key])
+            else:
+                qs = qs.order_by("-created_at")
+        return qs.distinct()
 
     def get_form(self):
         return GameFilterForm(self.request.GET or None)
@@ -88,6 +99,21 @@ class Shop(ListView):
         """Дополнительные элементы"""
         ctx = super().get_context_data()
         ctx['form'] = getattr(self, 'form', self.get_form())
+        # всі поточні GET-параметри
+        qd = self.request.GET.copy()
+        qd.pop('sort', None)  # забираємо старий sort
+        qd.pop('page', None)  # і номер сторінки
+        ctx['base_query'] = qd.urlencode()  # типу "category=rpg&price_min=100"
+
+        ctx['current_sort'] = self.request.GET.get('sort', '')
+
+        # Якщо хочеш, можеш ще передати список варіантів сортування
+        ctx['sort_options'] = [
+            ('', 'За замовчуванням'),
+            ('price_asc', 'Ціна: спочатку дешевші'),
+            ('price_desc', 'Ціна: спочатку дорожчі'),
+            ('popular', 'За популярністю'),
+        ]
         ctx['categories'] = Category.objects.only('id','title','slug')
         ctx['genres'] = Genre.objects.only('id','title')
         ctx['platforms'] = Platform.objects.only('id','title')

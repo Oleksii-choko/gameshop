@@ -1,8 +1,19 @@
 from django import forms
-from .models import Category,Platform,Genre, ContactMessage
+from .models import Category, Platform, Genre, ContactMessage
 
+
+SORT_CHOICES = [
+    ('', 'За замовчуванням'),
+    ('price_asc', 'Ціна: спочатку дешевші'),
+    ('price_desc', 'Ціна: спочатку дорожчі'),
+    ('popular', 'За популярністю'),
+]
 
 class GameFilterForm(forms.Form):
+    """Для сортування"""
+    sort = forms.ChoiceField(choices=SORT_CHOICES,required=False)
+
+
     category = forms.ModelMultipleChoiceField(
         queryset=Category.objects.all(),
         required=False,
@@ -19,8 +30,8 @@ class GameFilterForm(forms.Form):
         required=False,
         widget=forms.CheckboxSelectMultiple,
     )
-    price_min = forms.DecimalField(required=False,min_value=0)
-    price_max = forms.DecimalField(required=False,min_value=0)
+    price_min = forms.DecimalField(required=False, min_value=0)
+    price_max = forms.DecimalField(required=False, min_value=0)
 
     require_all_platforms = forms.BooleanField(required=False)
     require_all_genres = forms.BooleanField(required=False)
