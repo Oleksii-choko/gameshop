@@ -1,5 +1,5 @@
 from django import forms
-from .models import Category,Platform,Genre
+from .models import Category,Platform,Genre, ContactMessage
 
 
 class GameFilterForm(forms.Form):
@@ -35,3 +35,20 @@ class GameFilterForm(forms.Form):
                 "placeholder": "0",
                 "inputmode": "decimal",
             })
+
+
+class ContactForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=50, label='Імʼя')
+    last_name = forms.CharField(max_length=50, label='Прізвище')
+    email = forms.EmailField(label='Пошта')
+    subject = forms.CharField(max_length=100, label='Тема')
+    message = forms.CharField(
+        widget=forms.Textarea(
+            attrs={'class': 'form-control', 'placeholder': 'Ваше повідомлення...'}
+        ),
+        label='Повідомлення',
+    )
+
+    class Meta:
+        model = ContactMessage
+        fields = ['first_name', 'last_name', 'email', 'subject', 'message']

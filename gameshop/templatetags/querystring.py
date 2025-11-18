@@ -18,8 +18,6 @@ def qs_replace(request, **kwargs):
 
     return qd.urlencode()
 #
-#     return qd.urlencode()
-#
 # @register.simple_tag()
 # def get_sorted():
 #     sorters = [

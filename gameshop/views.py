@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 
 from .models import Category, Game, Genre, Platform
-from .forms import GameFilterForm
+from .forms import GameFilterForm, ContactForm
 
 
 class Index(ListView):
@@ -80,10 +80,7 @@ class Shop(ListView):
         return qs.distinct().order_by("-created_at")
 
     def get_form(self):
-        initial = {}
-        if slug := self.kwargs.get("slug"):
-            initial["category"] = [slug]
-        return GameFilterForm(self.request.GET or None, initial=initial)
+        return GameFilterForm(self.request.GET or None)
 
 
 
@@ -95,3 +92,18 @@ class Shop(ListView):
         ctx['genres'] = Genre.objects.only('id','title')
         ctx['platforms'] = Platform.objects.only('id','title')
         return ctx
+
+def contact_us(request):
+    """Сторінка контактів"""
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()  # <-- Ось тут запис у БД
+            return redirect('contact_us', )  # або на "дякуємо", або показати повідомлення
+    else:
+        form = ContactForm()
+    context = {
+        'title': 'Контакти',
+        'form': form,
+    }
+    return render(request, 'gameshop/contact.html', context)

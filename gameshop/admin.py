@@ -60,3 +60,11 @@ class GameAdmin(admin.ModelAdmin):
         if obj.pk and obj.image and getattr(obj.image, "url", None):
             return format_html('<img src="{}" style="max-height:180px;" />', obj.image.url)
         return "—"
+
+
+@admin.register(ContactMessage)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'first_name', 'last_name','email', 'subject', 'created_at', 'is_processed')
+    list_filter = ('is_processed', 'created_at')
+    search_fields = ('first_name', 'last_name', 'email', 'subject', 'message')
+    readonly_fields = ('created_at',)

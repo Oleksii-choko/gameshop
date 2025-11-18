@@ -14,7 +14,7 @@
                   <div class="item">
                       <h4>{{ category.title }}</h4>
                       <div class="thumb">
-                          <a href="{% url 'shop_by_category' slug=category.slug %}"><img src="{{ category.get_category_photo }}"
+                          <a href="{{category.get_absolute_url}}"><img src="{{ category.get_category_photo }}"
                                                               alt=""></a>
                       </div>
                   </div>

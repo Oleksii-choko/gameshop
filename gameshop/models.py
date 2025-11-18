@@ -60,7 +60,8 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         """Посилання на категорію"""
-        return reverse('shop_by_category', kwargs={'slug': self.slug})
+        base = reverse('shop_page')
+        return f"{base}?category={self.slug}"
 
     def get_category_photo(self):  # щоб діставав фото категорій
         if self.image:
@@ -123,7 +124,21 @@ class Game(models.Model):
         verbose_name = 'Відеогра'
         verbose_name_plural = 'Відеоігри'
 
+class ContactMessage(models.Model):
+    first_name = models.CharField(max_length=100, verbose_name='Контактне імʼя')
+    last_name = models.CharField(max_length=100, verbose_name='Контактне прізвище')
+    email = models.EmailField(verbose_name='Пошта')
+    subject = models.CharField(max_length=150, verbose_name='Тема')
+    message = models.TextField(verbose_name='Повідомлення')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата створення повідомлення')
+    is_processed = models.BooleanField(default=False, verbose_name='Стан')
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} ({self.email})"
+
+    class Meta:
+        verbose_name = 'Повідомлення'
+        verbose_name_plural = 'Повідомлення'
 # model Coupon
 # code (унікальний, кеш-інсенситив).
 # 	•	discount_type: percent або fixed.
