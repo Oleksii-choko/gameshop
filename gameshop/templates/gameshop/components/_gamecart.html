@@ -9,7 +9,7 @@
               <span class="category">{{ g }}</span>
                 {% endfor %}
               <h4>{{game}}</h4>
-              <a href="product-details.html"><i class="fa fa-shopping-bag"></i></a>
+              <a href="{{ game.get_absolute_url }}"><i class="fa fa-shopping-bag"></i></a>
             </div>
           </div>
         </div>

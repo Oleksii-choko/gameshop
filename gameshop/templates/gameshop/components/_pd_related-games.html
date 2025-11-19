@@ -1,0 +1,55 @@
+<div class="section categories related-games">
+  <div class="container">
+
+    <!-- рядок із заголовком і кнопкою -->
+    <div class="row align-items-center mb-4">
+      <div class="col-lg-6">
+        <div class="section-heading">
+          <h6>{{ game.category }}</h6>
+          <h2>Також переглядають</h2>
+        </div>
+      </div>
+      <div class="col-lg-6 text-lg-end">
+        <div class="main-button">
+          <a href="{{game.category.get_absolute_url}}">Дивитись всі</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- окремий рядок з іграми -->
+    <div class="row related-games-row">
+      {% for game in games %}
+        <div class="game-col col-6 col-md-4">
+          <div class="item">
+            <h4>Дивитись</h4>
+            <div class="thumb">
+              <a href="{{ game.get_absolute_url }}">
+                <img src="{{ game.get_game_photo }}" alt="">
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+<style>
+
+@media (min-width: 992px) {
+  .related-games-row .game-col {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
+.related-games-row {
+  row-gap: 30px;
+}
+
+@media (min-width: 992px) {
+  .related-games .main-button {
+    display: inline-block;
+  }
+}
+</style>

@@ -118,6 +118,25 @@ class Shop(ListView):
         ctx['genres'] = Genre.objects.only('id','title')
         ctx['platforms'] = Platform.objects.only('id','title')
         return ctx
+class GamePage(DetailView):
+    model = Game
+    context_object_name = 'game'
+    template_name = 'gameshop/product-details.html'
+    def get_queryset(self):
+        qs = (Game.objects.filter(is_published=True)
+              .select_related("category")
+              .prefetch_related("platforms", "genres"))
+        return qs
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data()
+        game = Game.objects.get(slug=self.kwargs['slug'])
+        ctx['title'] = game.title
+        games = Game.objects.all().exclude(slug=self.kwargs['slug']).filter(category=game.category)[:5]
+        ctx['games'] = games
+        return ctx
+
+
 
 def contact_us(request):
     """Сторінка контактів"""

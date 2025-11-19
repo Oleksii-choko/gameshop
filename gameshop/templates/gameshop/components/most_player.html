@@ -11,7 +11,7 @@
         </div>
         <div class="col-lg-6">
           <div class="main-button">
-            <a href="shop.html">ПЕРЕГЛЯНУТИ ЩЕ</a>
+            <a href="shop/?sort=popular">ПЕРЕГЛЯНУТИ ЩЕ</a>
           </div>
         </div>
           {% for game in top_games %}
@@ -25,7 +25,7 @@
                 <span class="category">{{g}}</span>
                 {% endfor %}
                 <h4>{{game}}</h4>
-                <a href="product-details.html">Детальніше</a>
+                <a href="{{ game.get_absolute_url }}">Детальніше</a>
             </div>
           </div>
         </div>

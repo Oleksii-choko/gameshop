@@ -1,0 +1,40 @@
+<div class="single-product section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="left-image">
+                        <img src="{{game.get_game_photo}}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 align-self-center">
+                    <h4>{{game}}</h4>
+                    {% if game.discount_percent > 0 %}
+                    <span class="price"><em>${{game.price}}</em> ${{game.price_after_discount}}</span>
+                    {% else%}
+                    <span class="price">${{game.price_after_discount}}</span>
+                    {% endif %}
+
+                    <p>{{game.description}}</p>
+                    <form id="qty" action="#">
+                        <input type="qty" class="form-control" id="1" aria-describedby="quantity" placeholder="1">
+                        <button type="submit"><i class="fa fa-shopping-bag"></i> ADD TO CART</button>
+                    </form>
+                    <ul>
+                        <li><span>Кількість:</span>{{game.stock}}</li>
+                        <li><span>Жанри:</span>
+                            {% if game.genres.all > 1%}
+                            {% for g in game.genres.all %}{{g}}, {% endfor %}
+                            {% else %}
+                            {% for g in game.genres.all %}{{g}}{% endfor %}
+                            {% endif %}
+                        </li>
+                        <li><span>Теги:</span>{% for t in game.tags.all %}{{t}}, {% endfor %}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-12">
+                    <div class="sep"></div>
+                </div>
+            </div>
+        </div>
+    </div>
