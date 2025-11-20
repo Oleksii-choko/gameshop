@@ -1,44 +1,108 @@
 <div class="more-info">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="tabs-content">
-                        <div class="row">
-                            <div class="nav-wrapper ">
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
-                                                data-bs-target="#description" type="button" role="tab"
-                                                aria-controls="description" aria-selected="true">Опис
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab"
-                                                data-bs-target="#reviews" type="button" role="tab"
-                                                aria-controls="reviews" aria-selected="false">Коментарі (...)
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="description" role="tabpanel"
-                                     aria-labelledby="description-tab">
-
-                                    <p>{{game.info}}</p>
-                                </div>
-                                <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                                    <p>Coloring book air plant shabby chic, crucifix normcore raclette cred swag artisan
-                                        activated charcoal. PBR&B fanny pack pok pok gentrify truffaut kitsch helvetica
-                                        jean shorts edison bulb poutine next level humblebrag la croix adaptogen.
-                                        <br><br>Hashtag poke literally locavore, beard marfa kogi bruh artisan
-                                        succulents seitan tonx waistcoat chambray taxidermy. Same cred meggings 3 wolf
-                                        moon lomo irony cray hell of bitters asymmetrical gluten-free art party raw
-                                        denim chillwave tousled try-hard succulents street art.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="tabs-content">
+          <div class="row">
+            <div class="nav-wrapper">
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active"
+                          id="description-tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#description"
+                          type="button"
+                          role="tab"
+                          aria-controls="description"
+                          aria-selected="true">
+                    Опис
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link"
+                          id="reviews-tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#reviews"
+                          type="button"
+                          role="tab"
+                          aria-controls="reviews"
+                          aria-selected="false">
+                    Коментарі ({{ comments|length }})
+                  </button>
+                </li>
+              </ul>
             </div>
+
+            <div class="tab-content" id="myTabContent">
+              <!-- ОПИС -->
+              <div class="tab-pane fade show active"
+                   id="description"
+                   role="tabpanel"
+                   aria-labelledby="description-tab">
+                <p>{{ game.info }}</p>
+              </div>
+
+              <!-- КОМЕНТАРІ -->
+              {% include 'gameshop/components/_pd_coments.html' %}
+            </div> <!-- /.tab-content -->
+
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+</div>
+<style>
+    .more-info .tabs-content {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 30px 32px;
+}
+
+.more-info .nav-tabs {
+  border-bottom: none;
+}
+
+.more-info .nav-tabs .nav-link {
+  border: none;
+  border-radius: 0;
+  font-weight: 500;
+  color: #777;
+}
+
+.more-info .nav-tabs .nav-link.active {
+  color: #000000;
+  border-bottom: 2px solid #000;
+}
+
+.comments-list .comment-item {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background-color: #f8f9fb;
+}
+
+.comments-list .comment-item:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.comment-text {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.comment-form-wrapper textarea {
+  resize: vertical;
+}
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var reviewsTab = document.getElementById('reviews-tab');
+    var commentTextarea = document.getElementById('comment-text');
+
+    if (reviewsTab && commentTextarea) {
+      reviewsTab.addEventListener('shown.bs.tab', function () {
+        commentTextarea.focus();
+      });
+    }
+  });
+</script>
