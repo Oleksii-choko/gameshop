@@ -18,7 +18,7 @@
         <div class="col-lg-2 col-md-6 col-sm-6">
           <div class="item">
             <div class="thumb">
-              <a href="product-details.html"><img src="{{game.get_game_photo }}" alt=""></a>
+              <a href="{{game.get_absolute_url}}"><img src="{{game.get_game_photo }}" alt=""></a>
             </div>
             <div class="down-content">
                 {% for g in game.genres.all %}

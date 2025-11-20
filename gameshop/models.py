@@ -139,6 +139,21 @@ class ContactMessage(models.Model):
     class Meta:
         verbose_name = 'Повідомлення'
         verbose_name_plural = 'Повідомлення'
+
+class Customer(models.Model):
+    """Контактна інформація покупця"""
+    user = models.OneToOneField(User, models.SET_NULL, blank=True, null=True, verbose_name='Корситувач')
+    first_name = models.CharField(max_length=255, verbose_name='Імʼя')
+    last_name = models.CharField(max_length=255, verbose_name='Прізвище')
+    email = models.EmailField(verbose_name='Пошта')
+    phone = models.CharField(max_length=255, verbose_name='Контактний номер')
+
+    def __str__(self):
+        return self.first_name
+
+    class Meta:
+        verbose_name = 'Покупець'
+        verbose_name_plural = 'Покупці'
 # model Coupon
 # code (унікальний, кеш-інсенситив).
 # 	•	discount_type: percent або fixed.

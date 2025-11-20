@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{ title }}
+{% endblock title %}
+{% block main %}
+<main class="auth-page py-5">
+    <div class="page-heading header-text account-heading">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <span class="page-label">МАГАЗИН</span>
+                    <h2 class="page-title">Обліковий запис</h2>
+
+                    <nav class="breadcrumb-wrapper">
+          <span class="breadcrumb">
+            <a href="{% url 'index'%}">Головна</a>  &gt;
+            <span>Обліковий запис</span>
+          </span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-xl-5">
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-body p-4 p-lg-5">
+                        {% include 'gameshop/components/_messages.html'%}
+
+                        <h2 class="h3 text-center mb-4">Обліковий запис</h2>
+
+                        <!-- Навігація вкладок -->
+                        {% include 'gameshop/components/_lg_navigation.html' %}
+
+
+                        <div class="tab-content" id="authTabsContent">
+                            <!-- Вкладка: Логін -->
+                            {% include 'gameshop/components/_lg_login.html' %}
+                            <!-- Вкладка: Реєстрація -->
+                            {% include 'gameshop/components/_lg_registration.html' %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+    /* Спеціальний стиль для банера сторінки акаунта */
+.page-heading.account-heading {
+  padding: 130px 0 80px;   /* трохи менша висота + відступ вниз */
+  text-align: center;
+}
+
+/* Маленький підзаголовок над головним тайтлом */
+.page-heading.account-heading .page-label {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ff6584;          /* можеш підставити свій акцентний колір */
+  margin-bottom: 8px;
+}
+
+/* Основний заголовок */
+.page-heading.account-heading .page-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* Хлібні крихти під заголовком */
+.page-heading.account-heading .breadcrumb-wrapper {
+  margin-top: 4px;
+}
+
+.page-heading.account-heading .breadcrumb {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.page-heading.account-heading .breadcrumb a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.page-heading.account-heading .breadcrumb a:hover {
+  text-decoration: underline;
+}
+  .auth-page .card {
+    border-radius: 1.5rem;
+  }
+
+  .auth-page .nav-pills .nav-link {
+    border-radius: 999px;
+    padding-inline: 1.5rem;
+  }
+
+  .auth-page .nav-pills .nav-link.active {
+    background-color: var(--bs-primary);
+  }
+</style>
+{% endblock main %}

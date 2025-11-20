@@ -3,9 +3,10 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login, logout
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Category, Game, Genre, Platform
-from .forms import GameFilterForm, ContactForm
+from .forms import GameFilterForm, ContactForm, RegistrationForm, LoginForm
 
 
 class Index(ListView):
@@ -152,3 +153,37 @@ def contact_us(request):
         'form': form,
     }
     return render(request, 'gameshop/contact.html', context)
+
+def login_registration(request):
+    """Сторінка входу/реєстрації"""
+    ctx = {"title": 'Увійти або зареєструватись',
+               'login_form': LoginForm,
+               'registration_form': RegistrationForm}
+    return render(request, 'gameshop/login_registration.html', ctx)
+
+def user_login(request):
+    """Вхід в обліковий запис"""
+    form = LoginForm(data=request.POST)
+    if form.is_valid():
+        user = form.get_user()
+        login(request, user)
+        return redirect('index')
+    else:
+        messages.error(request, 'Не правильне імʼя користувача або пароль!')
+        return redirect('login_registration')
+
+def user_logout(request):
+    """Вихід з облікового акаунта"""
+    logout(request)
+    return redirect('index')
+
+def user_registration(request):
+    """Реєстрація облікового запису"""
+    form = RegistrationForm(data=request.POST)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Аккаунт користувача створен успішно!')
+    else:
+        for error in form.errors:
+            messages.error(request, form.errors[error].as_text())
+    return redirect('login_registration')

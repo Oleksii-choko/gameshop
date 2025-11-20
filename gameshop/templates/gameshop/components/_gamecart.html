@@ -1,7 +1,7 @@
         <div class="col-lg-3 col-md-6">
           <div class="item">
             <div class="thumb">
-              <a href="product-details.html"><img src="{{ game.get_game_photo}}" alt=""></a>
+              <a href="{{game.get_absolute_url}}"><img src="{{ game.get_game_photo}}" alt=""></a>
               <span class="price"><em>${{ game.price }}</em>$20</span>
             </div>
             <div class="down-content">
@@ -9,7 +9,7 @@
               <span class="category">{{ g }}</span>
                 {% endfor %}
               <h4>{{game}}</h4>
-              <a href="{{ game.get_absolute_url }}"><i class="fa fa-shopping-bag"></i></a>
+              <a href="#"><i class="fa fa-shopping-bag"></i></a>
             </div>
           </div>
         </div>

@@ -35,7 +35,15 @@
                         <li><a href="{% url 'contact_us' %}"
                                class="{% if request.resolver_match.url_name == 'contact_us' %}active{% endif %}">
                             КОНТАКТИ</a></li>
-                        <li><a href="#">Sign In</a></li>
+                        {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}"
+                                    class="{% if request.resolver_match.url_name == 'logout' %}active{% endif %}">
+                            Вийти</a></li>
+                        {% else %}
+                        <li><a href="{% url 'login_registration' %}"
+                                    class="{% if request.resolver_match.url_name == 'login_registration' %}active{% endif %}">
+                            Увійти</a></li>
+                        {% endif %}
                     </ul>
                     <a class='menu-trigger'>
                         <span>Меню</span>

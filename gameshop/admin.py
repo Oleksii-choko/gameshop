@@ -68,3 +68,9 @@ class ContactAdmin(admin.ModelAdmin):
     list_filter = ('is_processed', 'created_at')
     search_fields = ('first_name', 'last_name', 'email', 'subject', 'message')
     readonly_fields = ('created_at',)
+
+@admin.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'first_name','last_name','email','phone')
+    list_filter = ('first_name', 'email')
+    search_fields = ('first_name', 'last_name', 'email', 'subject', 'message')
