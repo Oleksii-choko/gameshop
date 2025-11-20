@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.db.models import Q, F
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login, logout
 from django.contrib import messages
@@ -94,8 +95,6 @@ class Shop(ListView):
     def get_form(self):
         return GameFilterForm(self.request.GET or None)
 
-
-
     def get_context_data(self, *, object_list=None, **kwargs):
         """Дополнительные элементы"""
         ctx = super().get_context_data()
@@ -115,14 +114,17 @@ class Shop(ListView):
             ('price_desc', 'Спочатку дорожчі'),
             ('popular', 'За популярністю'),
         ]
-        ctx['categories'] = Category.objects.only('id','title','slug')
-        ctx['genres'] = Genre.objects.only('id','title')
-        ctx['platforms'] = Platform.objects.only('id','title')
+        ctx['categories'] = Category.objects.only('id', 'title', 'slug')
+        ctx['genres'] = Genre.objects.only('id', 'title')
+        ctx['platforms'] = Platform.objects.only('id', 'title')
         return ctx
+
+
 class GamePage(DetailView):
     model = Game
     context_object_name = 'game'
     template_name = 'gameshop/product-details.html'
+
     def get_queryset(self):
         qs = (Game.objects.filter(is_published=True)
               .select_related("category")
@@ -136,7 +138,6 @@ class GamePage(DetailView):
         games = Game.objects.all().exclude(slug=self.kwargs['slug']).filter(category=game.category)[:5]
         ctx['games'] = games
         return ctx
-
 
 
 def contact_us(request):
@@ -154,12 +155,14 @@ def contact_us(request):
     }
     return render(request, 'gameshop/contact.html', context)
 
+
 def login_registration(request):
     """Сторінка входу/реєстрації"""
     ctx = {"title": 'Увійти або зареєструватись',
-               'login_form': LoginForm,
-               'registration_form': RegistrationForm}
+           'login_form': LoginForm,
+           'registration_form': RegistrationForm}
     return render(request, 'gameshop/login_registration.html', ctx)
+
 
 def user_login(request):
     """Вхід в обліковий запис"""
@@ -172,10 +175,12 @@ def user_login(request):
         messages.error(request, 'Не правильне імʼя користувача або пароль!')
         return redirect('login_registration')
 
+
 def user_logout(request):
     """Вихід з облікового акаунта"""
     logout(request)
     return redirect('index')
+
 
 def user_registration(request):
     """Реєстрація облікового запису"""
@@ -187,3 +192,21 @@ def user_registration(request):
         for error in form.errors:
             messages.error(request, form.errors[error].as_text())
     return redirect('login_registration')
+
+
+def search(request):
+    """Пошук по слову"""
+    word = (request.GET.get('q') or '').strip()
+    if not word:
+        messages.error(request, 'Повторіть пошук')
+        return redirect('index')
+    category = Category.objects.filter(title__icontains=word).first()
+    if category:
+        return redirect(category.get_absolute_url())
+    games = Game.objects.filter(Q(title__icontains=word) | Q(description__icontains=word) | Q(info__icontains=word))
+    game = games.first()
+    if game:
+        return redirect(game.get_absolute_url())
+    else:
+        messages.error(request, 'Незрозумілий запит')
+    return redirect('index')

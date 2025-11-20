@@ -1,6 +1,6 @@
 <div class="search-input">
-              <form id="search" action="#">
-                <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
-                <button role="button">Search Now</button>
+              <form id="search" action="{% url 'search' %}">
+                <input type="text" placeholder="Пошук ..." id='searchText' name="q" value="{{ request.GET.q }}" />
+                <button role="button">Шукати</button>
               </form>
             </div>
