@@ -2,8 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Category, Platform, Genre, ContactMessage
-
+from .models import Category, Platform, Genre, ContactMessage, Comment
 
 SORT_CHOICES = [
     ('', 'За замовчуванням'),
@@ -12,10 +11,10 @@ SORT_CHOICES = [
     ('popular', 'За популярністю'),
 ]
 
+
 class GameFilterForm(forms.Form):
     """Для сортування"""
-    sort = forms.ChoiceField(choices=SORT_CHOICES,required=False)
-
+    sort = forms.ChoiceField(choices=SORT_CHOICES, required=False)
 
     category = forms.ModelMultipleChoiceField(
         queryset=Category.objects.all(),
@@ -67,6 +66,7 @@ class ContactForm(forms.ModelForm):
         model = ContactMessage
         fields = ['first_name', 'last_name', 'email', 'subject', 'message']
 
+
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': 'Имʼя користувача'}))
@@ -96,7 +96,23 @@ class RegistrationForm(UserCreationForm):
     password2 = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Підтвердіть пароль'}))
 
-
     class Meta:
         model = User
-        fields = ('username', 'first_name','last_name', 'email', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('text',)
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ваше повідомлення...',
+                'rows': 4,
+            })
+        }
+        labels = {
+            'text': 'Повідомлення',
+        }
+

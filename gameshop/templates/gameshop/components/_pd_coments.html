@@ -1,81 +1,64 @@
 <div class="tab-pane fade"
-                   id="reviews"
-                   role="tabpanel"
-                   aria-labelledby="reviews-tab">
+     id="reviews"
+     role="tabpanel"
+     aria-labelledby="reviews-tab">
 
-                <!-- Заголовок блоку коментарів -->
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <h4 class="mb-0">Коментарі</h4>
-                  <a href="#comment-form" class="small text-primary text-decoration-none">
-                    Залишити коментар
-                  </a>
+    <!-- Заголовок блоку коментарів -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Коментарі</h4>
+        <a href="#comment-form" class="small text-primary text-decoration-none">
+            Залишити коментар
+        </a>
+    </div>
+
+    <!-- Список коментарів -->
+    <div class="comments-list mb-4">
+        {% if comments %}
+        {% for comment in comments %}
+        <div class="comment-item mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <div class="comment-author fw-semibold">
+                    {{ comment.user }}
                 </div>
-
-                <!-- Список коментарів -->
-                <div class="comments-list mb-4">
-                  {% if comments %}
-                    {% for comment in comments %}
-                      <div class="comment-item mb-3">
-                        <div class="d-flex justify-content-between align-items-center mb-1">
-                          <div class="comment-author fw-semibold">
-                            {{ comment.author_name }}
-                          </div>
-                          <span class="comment-date small text-muted">
+                <span class="comment-date small text-muted">
                             {{ comment.created_at }}
                           </span>
-                        </div>
-                        <p class="comment-text mb-0">
-                          {{ comment.text }}
-                        </p>
-                      </div>
-                    {% endfor %}
-                  {% else %}
-                    <p class="text-muted mb-0">
-                      Ще немає коментарів. Будьте першим, хто поділиться враженнями!
-                    </p>
-                  {% endif %}
-                </div>
+            </div>
+            <p class="comment-text mb-0">
+                {{ comment.text }}
+            </p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="text-muted mb-0">
+            Ще немає коментарів. Будьте першим, хто поділиться враженнями!
+        </p>
+        {% endif %}
+    </div>
 
-                <!-- Форма додавання коментаря -->
-                <div class="comment-form-wrapper">
-                  <h5 class="mb-3" id="comment-form">Залишити коментар</h5>
+    <!-- Форма додавання коментаря -->
+    <div class="comment-form-wrapper">
+        <h5 class="mb-3" id="comment-form">Залишити коментар</h5>
+        {% if request.user.is_authenticated %}
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="mb-3">
+                {{ form.text.label_tag }}
+                {{ form.text }}
+                {{ form.text.errors }}
+            </div>
 
-                  <form method="post" action="">
-                    {% csrf_token %}
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <label for="comment-author" class="form-label">Ваше імʼя</label>
-                        <input type="text"
-                               class="form-control"
-                               id="comment-author"
-                               name="author_name"
-                               placeholder="Як вас звати?"
-                               required>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <label for="comment-email" class="form-label">Пошта (необовʼязково)</label>
-                        <input type="email"
-                               class="form-control"
-                               id="comment-email"
-                               name="author_email"
-                               placeholder="name@example.com">
-                      </div>
-                    </div>
+            <button type="submit" class="btn orange-button">
+                Надіслати коментар
+            </button>
+        </form>
+        {% else %}
+        <p class="text-muted">
+            Щоб залишити коментар, <a href="{% url 'login_registration' %}?next={{ request.path }}">увійдіть у свій
+            акаунт</a>.
+        </p>
+        {% endif %}
+    </div>
 
-                    <div class="mb-3">
-                      <label for="comment-text" class="form-label">Ваш коментар</label>
-                      <textarea class="form-control"
-                                id="comment-text"
-                                name="text"
-                                rows="4"
-                                placeholder="Поділіться своїми враженнями про гру..."
-                                required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn orange-button">
-                      Надіслати коментар
-                    </button>
-                  </form>
-                </div>
-
-              </div> <!-- /#reviews -->
+</div> <!-- /#reviews -->

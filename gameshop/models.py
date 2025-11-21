@@ -150,8 +150,9 @@ class Comment(models.Model):
     """Коментарі до постів"""
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='games')
     text = models.TextField(verbose_name='коментарій')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='користувач')
-    created_at = models.DateTimeField(verbose_name='Дата створіння')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL ,null=True,blank=True, verbose_name='користувач')
+    created_at = models.DateTimeField(auto_now_add=True,verbose_name='Дата створіння')
+    is_published = models.BooleanField(verbose_name='Опублікован', default=False)
 
     def __str__(self):
         return self.text

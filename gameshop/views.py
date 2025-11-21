@@ -6,8 +6,8 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Category, Game, Genre, Platform
-from .forms import GameFilterForm, ContactForm, RegistrationForm, LoginForm
+from .models import Category, Game, Genre, Platform, Comment
+from .forms import GameFilterForm, ContactForm, RegistrationForm, LoginForm, CommentForm
 
 
 class Index(ListView):
@@ -125,6 +125,27 @@ class GamePage(DetailView):
     context_object_name = 'game'
     template_name = 'gameshop/product-details.html'
 
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        if not request.user.is_authenticated:
+            messages.info(request, 'Увійдіть, щоб залишити коментар.')
+            login_url = reverse('login_registration')
+            return redirect(f"{login_url}?next={request.path}")
+
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.game = self.object
+            comment.user = request.user
+            comment.is_published = False
+            comment.save()
+            messages.success(request, 'Дякуємо, ваш коментар зʼявиться після перевірки!')
+            return redirect(self.object.get_absolute_url())
+
+        ctx = self.get_context_data(form=form)
+        return self.render_to_response(ctx)
+
     def get_queryset(self):
         qs = (Game.objects.filter(is_published=True)
               .select_related("category")
@@ -132,11 +153,17 @@ class GamePage(DetailView):
         return qs
 
     def get_context_data(self, **kwargs):
-        ctx = super().get_context_data()
-        game = Game.objects.get(slug=self.kwargs['slug'])
+        ctx = super().get_context_data(**kwargs)
+        game = self.object
+        form = kwargs.get('form')
+        if form is None:
+            form = CommentForm()
+        ctx['form'] = form
+        ctx['comments'] = Comment.objects.filter(game=game, is_published=True).order_by('-created_at')
         ctx['title'] = game.title
-        games = Game.objects.all().exclude(slug=self.kwargs['slug']).filter(category=game.category)[:5]
-        ctx['games'] = games
+        ctx['games'] = (Game.objects
+        .filter(is_published=True, category=game.category)
+        .exclude(slug=self.kwargs['slug'])[:5])
         return ctx
 
 
