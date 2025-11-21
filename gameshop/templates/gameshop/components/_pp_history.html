@@ -1,0 +1,65 @@
+                        <div class="tab-pane fade"
+                             id="account-orders"
+                             role="tabpanel"
+                             aria-labelledby="account-orders-tab">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+                                <div class="card-body p-4 p-lg-5">
+                                    <h4 class="mb-3">Мої покупки</h4>
+                                    <p class="text-muted small mb-4">
+                                        Тут зберігається історія ваших замовлень та покупок.
+                                    </p>
+
+                                    {% if orders %}
+                                    <div class="table-responsive">
+                                        <table class="table align-middle orders-table">
+                                            <thead>
+                                            <tr>
+                                                <th>№ замовлення</th>
+                                                <th>Дата</th>
+                                                <th class="text-center">Ігор</th>
+                                                <th class="text-end">Сума</th>
+                                                <th class="text-end">Статус</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for order in orders %}
+                                            <tr>
+                                                <td>#{{ order.id }}</td>
+                                                <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                                                <td class="text-center">
+                                                    {{ order.items_count }}
+                                                </td>
+                                                <td class="text-end">
+                                                    {{ order.total_price }} ₴
+                                                </td>
+                                                <td class="text-end">
+                    <span class="badge
+                      {% if order.status == 'paid' %} bg-success
+                      {% elif order.status == 'pending' %} bg-warning text-dark
+                      {% else %} bg-secondary{% endif %}">
+                      {{ order.get_status_display|default:order.status }}
+                    </span>
+                                                </td>
+                                                <td class="text-end">
+                                                    <a href="{% url 'order_detail' order.id %}"
+                                                       class="btn btn-sm btn-outline-primary">
+                                                        Детальніше
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% else %}
+                                    <p class="text-muted mb-0">
+                                        Ви ще нічого не купували. Перейдіть до <a
+                                            href="{% url 'shop_page' %}">магазину</a>, щоб оформити першу покупку.
+                                    </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                        </div>

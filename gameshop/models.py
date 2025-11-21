@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+
 class Language(models.Model):
     title = models.CharField(max_length=255, verbose_name='Мова озвучки', unique=True)
 
@@ -26,6 +27,7 @@ class Platform(models.Model):
         verbose_name = 'Платформа'
         verbose_name_plural = 'Платформи'
 
+
 class Genre(models.Model):
     title = models.CharField(max_length=255, verbose_name='Жанр', unique=True)
 
@@ -35,6 +37,7 @@ class Genre(models.Model):
     class Meta:
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанри'
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=255, verbose_name='Тег', unique=True)
@@ -113,6 +116,7 @@ class Game(models.Model):
             return self.image.url
         else:
             return 'https://placehold.co/600x400/EEEEEE/222222?text=No+Image'
+
     @property
     def price_after_discount(self):
         if self.discount_percent:
@@ -123,6 +127,7 @@ class Game(models.Model):
     class Meta:
         verbose_name = 'Відеогра'
         verbose_name_plural = 'Відеоігри'
+
 
 class ContactMessage(models.Model):
     first_name = models.CharField(max_length=100, verbose_name='Контактне імʼя')
@@ -140,6 +145,22 @@ class ContactMessage(models.Model):
         verbose_name = 'Повідомлення'
         verbose_name_plural = 'Повідомлення'
 
+
+class Comment(models.Model):
+    """Коментарі до постів"""
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='games')
+    text = models.TextField(verbose_name='коментарій')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='користувач')
+    created_at = models.DateTimeField(verbose_name='Дата створіння')
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        verbose_name = 'Коментар'
+        verbose_name_plural = 'Коментарі'
+
+
 class Customer(models.Model):
     """Контактна інформація покупця"""
     user = models.OneToOneField(User, models.SET_NULL, blank=True, null=True, verbose_name='Корситувач')
@@ -154,6 +175,7 @@ class Customer(models.Model):
     class Meta:
         verbose_name = 'Покупець'
         verbose_name_plural = 'Покупці'
+
 # model Coupon
 # code (унікальний, кеш-інсенситив).
 # 	•	discount_type: percent або fixed.

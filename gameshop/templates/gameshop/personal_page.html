@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{ title }}
+{% endblock title %}
+{% block main %}
+<main>
+    <div class="page-heading header-text account-heading">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <span class="page-label">ОСОБИСТИЙ КАБІНЕТ</span>
+                    <h2 class="page-title">Мій профіль та кошик</h2>
+
+                    <nav class="breadcrumb-wrapper mt-2">
+          <span class="breadcrumb">
+            <a href="{% url 'index' %}">Головна</a> &gt;
+            <span>Особистий кабінет</span>
+          </span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main class="account-page py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Ліва колонка: меню кабінету -->
+                {% include 'gameshop/components/_pp_menu.html' %}
+
+                <!-- Права колонка: контент вкладок -->
+                <div class="col-lg-9">
+                    <div class="tab-content" id="accountTabsContent">
+                        <!-- Вкладка: персональні дані -->
+                        {% include 'gameshop/components/_pp_personal_date.html'%}
+
+                        <!-- Вкладка: кошик -->
+                        {% include 'gameshop/components/_pp_order.html'%}
+                        <!-- Вкладка: покупки -->
+                        {% include 'gameshop/components/_pp_history.html'%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</main>
+{% endblock main %}
+<style>
+    .orders-table thead th {
+  border-bottom-width: 1px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.orders-table tbody td {
+  font-size: 14px;
+}
+
+.orders-table .badge {
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 12px;
+}
+    /* Банер особистого кабінету */
+.page-heading.account-heading {
+  padding: 120px 0 70px;
+  text-align: center;
+}
+
+.page-heading.account-heading .page-label {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ff6584;
+  margin-bottom: 8px;
+}
+
+.page-heading.account-heading .page-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.page-heading.account-heading .breadcrumb {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.page-heading.account-heading .breadcrumb a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.page-heading.account-heading .breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+/* Основний блок кабінету */
+.account-page .card {
+  border-radius: 1.5rem;
+}
+
+.account-sidebar .nav-pills .nav-link {
+  border-radius: 999px;
+  text-align: left;
+  padding: 0.6rem 1rem;
+  font-size: 14px;
+}
+
+.account-sidebar .nav-pills .nav-link.active {
+  background-color: var(--bs-primary);
+}
+
+/* Таблиця кошика */
+.cart-table thead th {
+  border-bottom-width: 1px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cart-thumb img {
+  width: 60px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
+</style>

@@ -1,0 +1,87 @@
+                        <div class="tab-pane fade"
+                             id="account-cart"
+                             role="tabpanel"
+                             aria-labelledby="account-cart-tab">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+                                <div class="card-body p-4 p-lg-5">
+                                    <h4 class="mb-3">Мій кошик</h4>
+                                    <p class="text-muted small mb-4">
+                                        Перевірте ігри перед оформленням замовлення.
+                                    </p>
+
+                                    {% if cart_items %}
+                                    <div class="table-responsive">
+                                        <table class="table align-middle cart-table">
+                                            <thead>
+                                            <tr>
+                                                <th>Гра</th>
+                                                <th class="text-center">Кількість</th>
+                                                <th class="text-end">Ціна</th>
+                                                <th class="text-end">Разом</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for item in cart_items %}
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <div class="cart-thumb">
+                                                            <img src="{{ item.game.get_game_photo }}" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <div class="fw-semibold">{{ item.game.title }}</div>
+                                                            <div class="small text-muted">
+                                                                {{ item.game.platforms.all|join:", " }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ item.quantity }}
+                                                </td>
+                                                <td class="text-end">
+                                                    {{ item.game.price }} ₴
+                                                </td>
+                                                <td class="text-end">
+                                                    {{ item.total_price }} ₴
+                                                </td>
+                                                <td class="text-end">
+                                                    <button type="button"
+                                                            class="btn btn-sm btn-outline-danger">
+                                                        &times;
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <div class="small text-muted">
+                                            Всього позицій: {{ cart_items|length }}
+                                        </div>
+                                        <div class="h5 mb-0">
+                                            Разом: <strong>{{ cart_total }} ₴</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-end mt-4 gap-2">
+                                        <a href="{% url 'shop_page' %}" class="btn btn-outline-secondary">
+                                            Продовжити покупки
+                                        </a>
+                                        <button type="button" class="btn orange-button">
+                                            Оформити замовлення
+                                        </button>
+                                    </div>
+                                    {% else %}
+                                    <p class="text-muted mb-0">
+                                        Ваш кошик порожній. Додайте ігри з <a href="{% url 'shop_page' %}">магазину</a>.
+                                    </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                        </div> <!-- /tab-pane cart -->

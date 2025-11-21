@@ -35,13 +35,15 @@
                                class="{% if request.resolver_match.url_name == 'contact_us' %}active{% endif %}">
                             КОНТАКТИ</a></li>
                         {% if request.user.is_authenticated %}
-                        <li><a href="shop.html">ОСОБИСТИЙ КАБІНЕТ</a></li>
+                        <li><a href="{% url 'personal_page' %}"
+                               class="{% if request.resolver_match.url_name == 'logout' %}active{% endif %}">
+                            ОСОБИСТИЙ КАБІНЕТ</a></li>
                         <li><a href="{% url 'logout' %}"
-                                    class="{% if request.resolver_match.url_name == 'logout' %}active{% endif %}">
+                               class="{% if request.resolver_match.url_name == 'logout' %}active{% endif %}">
                             Вийти</a></li>
                         {% else %}
                         <li><a href="{% url 'login_registration' %}"
-                                    class="{% if request.resolver_match.url_name == 'login_registration' %}active{% endif %}">
+                               class="{% if request.resolver_match.url_name == 'login_registration' %}active{% endif %}">
                             Увійти</a></li>
                         {% endif %}
                     </ul>

@@ -32,7 +32,7 @@ class Index(ListView):
 
         context['categories'] = Category.objects.only('id', 'title', 'slug', 'image')
         context['top_games'] = base_game.order_by('-watched')[:6]
-        context['first_game'] = base_game.first()
+        context['first_game'] = base_game.filter(discount_percent__gt=0).first()
         context['discount_game'] = base_game.order_by('?').filter(discount_percent__gt=0)[:4]
         return context
 
@@ -210,3 +210,9 @@ def search(request):
     else:
         messages.error(request, 'Незрозумілий запит')
     return redirect('index')
+
+
+class PersonalPage(ListView):
+    model = Game
+    extra_context = {'title': 'Особистий кабінет'}
+    template_name = 'gameshop/personal_page.html'
