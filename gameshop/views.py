@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
+from django.template.context_processors import request
 from django.urls import reverse
 from django.db.models import Q, F
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Category, Game, Genre, Platform, Comment
-from .forms import GameFilterForm, ContactForm, RegistrationForm, LoginForm, CommentForm
+from .models import Category, Game, Genre, Platform, Comment, User
+from .forms import GameFilterForm, ContactForm, RegistrationForm, LoginForm, CommentForm, PersonalForm
 
 
 class Index(ListView):
@@ -239,7 +240,24 @@ def search(request):
     return redirect('index')
 
 
-class PersonalPage(ListView):
-    model = Game
+class PersonalPage(LoginRequiredMixin, TemplateView):
     extra_context = {'title': 'Особистий кабінет'}
     template_name = 'gameshop/personal_page.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data()
+        form = kwargs.get('personalform')
+        if form is None:
+            form = PersonalForm(instance=self.request.user)
+
+        ctx['personalform'] = form
+        return ctx
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        form = PersonalForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(self.request, 'Дані успішно оновлені!')
+            redirect('personal_page')
+        ctx = self.get_context_data(personalform=form)
+        return self.render_to_response(ctx)

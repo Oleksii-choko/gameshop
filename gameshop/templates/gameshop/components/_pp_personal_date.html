@@ -7,51 +7,31 @@
                                 <div class="card-body p-4 p-lg-5">
                                     <h4 class="mb-3">Персональні дані</h4>
                                     <p class="text-muted small mb-4">
-                                        Тут ви можете змінити свої контактні дані, щоб ми могли швидко оформлювати
+                                        Тут ви можете переглянути або змінити свої контактні дані, щоб ми могли швидко оформлювати
                                         замовлення.
                                     </p>
 
                                     <form method="post" action="">
                                         {% csrf_token %}
+                                        {{ personalform.non_field_errors }}
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <label for="profile-first-name" class="form-label">Імʼя</label>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="profile-first-name"
-                                                       name="first_name"
-                                                       placeholder="Ваше імʼя"
-                                                       value="{{ user.first_name }}">
+                                                <label for="{{ personalform.first_name.id_for_label }}" class="form-label">Імʼя</label>
+                                                {{ personalform.first_name }}
+                                                {{ personalform.first_name.errors }}
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <label for="profile-last-name" class="form-label">Прізвище</label>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="profile-last-name"
-                                                       name="last_name"
-                                                       placeholder="Ваше прізвище"
-                                                       value="{{ user.last_name }}">
+                                                <label for="{{ personalform.last_name.id_for_label }}" class="form-label">Прізвище</label>
+                                                {{ personalform.last_name }}
+                                                {{ personalform.last_name.errors }}
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <label for="profile-email" class="form-label">Пошта</label>
-                                                <input type="email"
-                                                       class="form-control"
-                                                       id="profile-email"
-                                                       name="email"
-                                                       placeholder="name@example.com"
-                                                       value="{{ user.email }}">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="profile-phone" class="form-label">Телефон</label>
-                                                <input type="tel"
-                                                       class="form-control"
-                                                       id="profile-phone"
-                                                       name="phone"
-                                                       placeholder="+38 (0XX) XXX-XX-XX"
-                                                       value="{{ user.profile.phone }}">
+                                                <label for="{{ personalform.email.id_for_label }}" class="form-label">Пошта</label>
+                                                {{ personalform.email }}
+                                                {{ personalform.email.errors }}
                                             </div>
                                         </div>
 

@@ -116,3 +116,18 @@ class CommentForm(forms.ModelForm):
             'text': 'Повідомлення',
         }
 
+class PersonalForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email',)
+        widgets ={
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ваше імʼя'}),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ваше прізвище'}),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ваша пошта'})
+        }
